@@ -49,7 +49,7 @@ class OnesidedCoupling:
     Van der Pol:
         $\\ddot{x} - \\mu (1 - x^2) \\dot{x} + x = 0$
     Duffing:
-        $\\ddot{y} + \\delta \\dot{y} + \\alpha y + \\beta y^3 = kx$
+        $\\ddot{y} + \\gamma \\dot{y} + \\alpha y + \\beta y^3 = kx$
     
     We will then get for each oscillators two equations, because they both are equations 2nd order.
     
