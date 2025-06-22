@@ -21,7 +21,13 @@ $\alpha$ : linear stiffness coefficient
 $\beta$ : nonlinear stiffness coefficient (controls the strength of the cubic term)
 
 ## Coupling Variations
-Depending how to drive the Duffingoscillator, there are variation of ondirectional coupling ($\ddot{y} + \gamma \dot{y} + \alpha y + \beta y^3 = k x$), bidirectional coupling ($\ddot{y} + \gamma \dot{y} + \alpha y + \beta y^3 = k x$ and $\ddot{x} - \mu (1 - x^2) \dot{x} + x = k y$) or parametric coupling ($\ddot{y} + \gamma \dot{y} + \alpha y + \beta y^3 = k x y$)
+Depending how to drive the Duffingoscillator, there are variation of:
+
+ondirectional coupling ($\ddot{y} + \gamma \dot{y} + \alpha y + \beta y^3 = k x$)
+
+bidirectional coupling ($\ddot{y} + \gamma \dot{y} + \alpha y + \beta y^3 = k x$ and $\ddot{x} - \mu (1 - x^2) \dot{x} + x = k y$) 
+
+parametric coupling ($\ddot{y} + \gamma \dot{y} + \alpha y + \beta y^3 = k x y$)
 
 
 k : coupling constant
