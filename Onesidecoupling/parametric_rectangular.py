@@ -1,10 +1,82 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import odeint
-from scipy.signal import argrelmax, argrelextrema
-from scipy.signal import find_peaks
-from scipy.fft import fft
-
+from pathlib import Path
+from matplotlib.ticker import FormatStrFormatter
 from mainscript import OnesidedCoupling
+import math
 
+# [Parameters]________________________________________________________________________________________________________________________________________________
+
+with open(str(Path.cwd()) + "/path.txt") as f:
+  path = f.read()
+
+t_step = 0.01
+t_last = 100 # 50h -> 1 point represent 1h
+t = np.arange(0, 500, t_step)
+keep = int(t_last / t_step)
+x = 1
+y = 1
+q = 1
+p = 1
+par0 = x,y,p,q
+k_up = np.arange(0.05,0.5, 0.01)
+k_down = k_up[::-1]
+
+gamma = 0.1
+mu = 0.2
+beta = 0.2
+alpha = np.arange(0.01,0.5, 0.01)
+
+# [Functions]____________________________________________________________________________________________________________________
+
+def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
+    amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).peak()[1][1]['peak_heights'][-10:]
+
+    return amp
+
+def approx(listofnum, tol):
+     mean = np.mean(listofnum)
+     boolean = [abs(i - mean) / mean * 100 for i in listofnum]
+     
+     for num in boolean:
+          if num > tol:
+               return math.nan
+          else:
+               return mean
+          
+
+par0 = 1,1.4,1.4,1
+
+y,q = np.meshgrid(k_up, alpha)
+up = np.zeros_like(y)
+down = np.zeros_like(y)
+
+index = []
+for l in range(len(alpha)):
+        for m in range(len(k_up)):
+            sol = OnesidedCoupling(par0, t, keep, k_up[m], mu, gamma, alpha[l], beta).duffvdpsolver()
+            par0 = sol[-1]
+            amp = approx(compute_amplitude(par0, t, keep, k_up[m], mu, gamma, alpha[l], beta), 0.1)
+            print(amp)
+            try:
+                if math.isnan(amp) == True:
+                    index.append([l,m])
+            except:
+                print(amp)
+                index.append([l,m])
+            up[l,m] = amp
+    
+from matplotlib.ticker import FormatStrFormatter
+plt.imshow(up, extent=[min(k_up),max(k_up),min(alpha),max(alpha)], cmap = "viridis", origin='lower')
+plt.xlabel("k in a.u.",fontsize = 25)
+plt.ylabel("$\\omega _y$ in Hz",fontsize = 25)
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.3f'))
+plt.xticks( np.linspace(round(min(k_up),2),round(max(k_up),2), 3), fontsize = 18)
+plt.yticks(np.linspace(min(alpha),max(alpha), 5),fontsize = 18)
+plt.colorbar()
+
+plt.savefig(path + "omegaagainstk" + ".png", dpi =  300, bbox_inches = "tight")
+
+print(index)   
 
