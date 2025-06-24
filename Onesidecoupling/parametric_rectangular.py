@@ -19,13 +19,13 @@ y = 1
 q = 1
 p = 1
 par0 = x,y,p,q
-k_up = np.arange(0.05,0.5, 0.01)
+k_up = np.arange(0.01,2.5, 0.01)
 k_down = k_up[::-1]
 
-gamma = 0.1
+gamma = 0.2
 mu = 0.2
-beta = 0.2
-alpha = np.arange(0.01,0.5, 0.01)
+beta = 1
+alpha = np.arange(0.01, 3, 0.1)
 
 # [Functions]____________________________________________________________________________________________________________________
 
@@ -60,13 +60,13 @@ for l in range(len(alpha)):
             print(amp)
             try:
                 if math.isnan(amp) == True:
-                    index.append([l,m])
+                    index.append(("alpha: ", alpha[l],"k: ",k_up[m]))
             except:
                 print(amp)
-                index.append([l,m])
+                index.append(("alpha: ", alpha[l],"k: ",k_up[m]))
             up[l,m] = amp
     
-from matplotlib.ticker import FormatStrFormatter
+plt.figure(figsize= (10,10))
 plt.imshow(up, extent=[min(k_up),max(k_up),min(alpha),max(alpha)], cmap = "viridis", origin='lower')
 plt.xlabel("k in a.u.",fontsize = 25)
 plt.ylabel("$\\omega _y$ in Hz",fontsize = 25)
@@ -74,9 +74,9 @@ plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.3f'))
 plt.xticks( np.linspace(round(min(k_up),2),round(max(k_up),2), 3), fontsize = 18)
 plt.yticks(np.linspace(min(alpha),max(alpha), 5),fontsize = 18)
-plt.colorbar()
+plt.colorbar().ax.set_ylabel('A$_y$ in a.u.', fontsize = 20)
 
-plt.savefig(path + "omegaagainstk" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path + "omegaagainstk_highk" + ".png", dpi =  300, bbox_inches = "tight")
 
 print(index)   
 

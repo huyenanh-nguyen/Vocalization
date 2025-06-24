@@ -19,13 +19,13 @@ y = 1
 q = 1
 p = 1
 par0 = x,y,p,q
-k_up = np.arange(0,1, 0.01)
+k_up = np.arange(0,2.5, 0.01)
 k_down = k_up[::-1]
 
-gamma = 0.1
+gamma = 0.2
 mu = 0.2
-beta = 0.2
-alpha = 0.5
+beta = 1
+alpha = 0.3
 
 
 # [Functions]____________________________________________________________________________________________________________________
@@ -75,5 +75,5 @@ plt.xticks(fontsize = 20)
 plt.title(label = "$\\alpha$ = " + f"{alpha:.4f}" + ", $\\omega$ = " + f"{np.sqrt(alpha):.4f}", fontsize = 20)
 
 plt.yticks(fontsize = 20)
-plt.savefig(path +"Bifurcation_alpha05" +  ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path +"Bifurcation_highk" +  ".png", dpi =  300, bbox_inches = "tight")
 #plt.show()

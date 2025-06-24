@@ -18,10 +18,10 @@ q = 1
 p = 1
 par = x,y,p,q
 k = 0.1
-gamma = 0.1
-mu = 2
-beta = 0.2
-alpha = 0.2
+gamma = 0.2
+mu = 0.2
+beta = 1
+alpha = 1
 lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
 
 xsol = lilie.x_solv()
@@ -47,11 +47,11 @@ plt.show()
 
 #[Duffing]________________________________________________________________________________________________________________________________________________
 
-plt.plot(ysol[:keep],qsol[:keep])   # with transient
+plt.plot(ysol[-keep:],qsol[-keep:])   # with transient
 plt.xlabel("y in a.u.",fontsize = 20)
 plt.ylabel("q in a.u.",fontsize = 20)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 plt.xticks(np.linspace(round(min(ysol),2),round(max(ysol),2), 5), fontsize = 20)
 plt.yticks(fontsize = 20)
-plt.savefig(path +"y_phaseplane" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path +"y_phaseplane_last" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()

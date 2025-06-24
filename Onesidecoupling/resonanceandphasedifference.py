@@ -19,10 +19,11 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0.01
-gamma = 0.1
+k = 0.1
+gamma = 0.2
 mu = 0.2
-beta = 0.2
+beta = 1
+alpha = 1
 reso_alpha = np.arange(0, 4, 0.01)
 omega = [np.sqrt(i) for i in reso_alpha]
 
@@ -30,54 +31,54 @@ omega = [np.sqrt(i) for i in reso_alpha]
 
 
 
-# amp = [np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, i, beta).find_peaks_max()[1][1]['peak_heights'][-10:]) for i in reso_alpha]
+amp = [np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, i, beta).find_peaks_max()[1][1]['peak_heights'][-10:]) for i in reso_alpha]
 
-# plt.plot(omega, amp)
-# plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-# plt.xticks(np.linspace(min(omega),max(omega), 5), fontsize = 20)
-# plt.yticks(fontsize = 20)
-# plt.xlabel("$\omega _y$ in Hz", fontsize = 20)
-# plt.ylabel("A$_y$ in a.u.",fontsize = 20)
-# plt.savefig( path + "resonance_k01" + ".png", dpi =  300, bbox_inches = "tight")
-# plt.show()
+plt.plot(omega, amp)
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.xticks(np.linspace(min(omega),max(omega), 5), fontsize = 20)
+plt.yticks(fontsize = 20)
+plt.xlabel("$\omega _y$ in Hz", fontsize = 20)
+plt.ylabel("A$_y$ in a.u.",fontsize = 20)
+plt.savefig( path + "resonance_k01" + ".png", dpi =  300, bbox_inches = "tight")
+plt.show()
 
 
 
 # [Resonance_Lorentzcurve (van der Pol)]____________________________________________________________________________________________________________________________________
 
-def lorenz(x, omega, gamma):
-    return 0.02 / np.sqrt((x**2 - omega ** 2)**2 + gamma ** 2 * x ** 2)
+# def lorenz(x, omega, gamma):
+#     return 0.02 / np.sqrt((x**2 - omega ** 2)**2 + gamma ** 2 * x ** 2)
 
-lorenz_sol = [lorenz(i, 1, 0.1) for i in omega]
-amp = [np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, i, beta).find_peaks_max()[1][1]['peak_heights'][-10:]) for i in reso_alpha]
+# lorenz_sol = [lorenz(i, 1, 0.1) for i in omega]
+# amp = [np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, i, beta).find_peaks_max()[1][1]['peak_heights'][-10:]) for i in reso_alpha]
 
-plt.plot(omega, amp, label = "Simulation")
-plt.plot(omega, lorenz_sol, label = "Lorentz Curve")
+# plt.plot(omega, amp, label = "Simulation")
+# plt.plot(omega, lorenz_sol, label = "Lorentz Curve")
 
-plt.legend(fontsize = 20, loc = "lower right")
-plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-plt.xticks(np.linspace(min(omega),max(omega), 5),fontsize = 20)
-plt.yticks(fontsize = 20)
-plt.xlabel("$\omega _y$ in Hz", fontsize = 16)
-plt.ylabel("A$_y$,A$_{Lorentz}$ in a.u.",fontsize = 20)
-plt.savefig( path + "resonance_lorentz_k001" + ".png", dpi =  300, bbox_inches = "tight")
-plt.show()
+# plt.legend(fontsize = 20, loc = "lower right")
+# plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+# plt.xticks(np.linspace(min(omega),max(omega), 5),fontsize = 20)
+# plt.yticks(fontsize = 20)
+# plt.xlabel("$\omega _y$ in Hz", fontsize = 16)
+# plt.ylabel("A$_y$,A$_{Lorentz}$ in a.u.",fontsize = 20)
+# plt.savefig( path + "resonance_lorentz_k001" + ".png", dpi =  300, bbox_inches = "tight")
+# plt.show()
 
 # [Phaseshift Duffing]___________________________________________________________________________________________________________________________________
 
 
 
-# period_vdp = OnesidedCoupling(par, t, keep, k, mu, gamma, 0.2, beta).period(10)[0]
-# time_amp_vdp = [t[i] for i in OnesidedCoupling(par, t, keep, k, mu, gamma, 0.2, beta).find_peaks_max()[1][0][-10:]]
+period_vdp = OnesidedCoupling(par, t, keep, k, mu, gamma, 0.2, beta).period(10)[0]
+time_amp_vdp = [t[i] for i in OnesidedCoupling(par, t, keep, k, mu, gamma, 0.2, beta).find_peaks_max()[1][0][-10:]]
 
-# time_amp = [t[k] for k in [OnesidedCoupling(par, t, keep, k, mu, gamma, i, beta).find_peaks_max()[1][0][-10:] for i in reso_alpha]]
-# phaseamp = [2 * np.pi * (time_amp_vdp[0]-i[0])/period_vdp for i in time_amp]
+time_amp = [t[k] for k in [OnesidedCoupling(par, t, keep, k, mu, gamma, i, beta).find_peaks_max()[1][0][-10:] for i in reso_alpha]]
+phaseamp = [2 * np.pi * (time_amp_vdp[0]-i[0])/period_vdp for i in time_amp]
 
-# plt.plot(omega, phaseamp)
-# plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-# plt.xticks(np.linspace(min(omega),max(omega), 5), fontsize = 20)
-# plt.yticks(fontsize = 20)
-# plt.xlabel("$\omega$", fontsize = 20)
-# plt.ylabel("$\\varphi$",fontsize = 20)
-# plt.savefig( path + "phaseshift_k01" + ".png", dpi =  300, bbox_inches = "tight")
-# plt.show()
+plt.plot(omega, phaseamp)
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.xticks(np.linspace(min(omega),max(omega), 5), fontsize = 20)
+plt.yticks(fontsize = 20)
+plt.xlabel("$\omega$", fontsize = 20)
+plt.ylabel("$\\varphi$",fontsize = 20)
+plt.savefig( path + "phaseshift_k01" + ".png", dpi =  300, bbox_inches = "tight")
+plt.show()

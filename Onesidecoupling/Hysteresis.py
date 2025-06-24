@@ -21,9 +21,9 @@ q = 1
 p = 1
 par = x,y,p,q
 k = 0.1
-gamma = 0.1
+gamma = 0.2
 mu = 0.2
-beta = 0.2
+beta = 1
 alpha_up = np.arange(0, 3, 0.01)
 alpha_down = alpha_up[::-1]
 
@@ -60,7 +60,7 @@ def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 # plt.plot(np.sqrt(alpha_down), amplitudes_down, label="Decreasing ω", color = "#88C960")
 # plt.xlabel("$\omega _y$ in Hz", fontsize = 20)
 # plt.ylabel("A$_{y}$ in a.u.", fontsize = 20)
-# plt.axvline(x = np.sqrt(0.5), color = "r")
+# plt.axvline(x = np.sqrt(0.3), color = "r")
 # plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 # plt.xticks(np.linspace(min(np.sqrt(alpha_up)),max(np.sqrt(alpha_up)),5), fontsize = 20)
 # plt.yticks(fontsize = 20)
@@ -70,7 +70,7 @@ def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 
 # [Basin of Attractor]___________________________________________________________________________________________________________________
 
-alpha = [0.5]
+alpha = [0.3]
 
 
 colours = ["#283D3B", "#F8D794"]
@@ -108,5 +108,5 @@ for i in range(len(alpha)):
     patches = [mpatches.Patch(color=colours[i], label=labels[i]) for i in range(len(colours))]
     plt.legend(handles=patches, loc='upper right', fontsize = 14)
     
-    plt.savefig(path + "Basin_alpha05" + ".png", dpi =  300, bbox_inches = "tight")
+    plt.savefig(path + "Basin" + ".png", dpi =  300, bbox_inches = "tight")
             
