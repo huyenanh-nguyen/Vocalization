@@ -19,8 +19,8 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0.1
-gamma = 0.2
+k = 0.0
+gamma = 0.1
 mu = 0.2
 beta = 1
 alpha = 1
@@ -47,7 +47,7 @@ plt.xlabel("t in s", fontsize = 20)
 plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
 plt.ylim([-3, 3])
-plt.xlim([0,150])
+plt.xlim([0,200])
 plt.savefig(path + "x_timeseries" + ".png", dpi =  300, bbox_inches = "tight")
 plt.show()
 
@@ -61,7 +61,7 @@ plt.xlabel("t in s", fontsize = 20)
 plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
 plt.ylim([-3, 3])
-plt.xlim([0,500])
+plt.xlim([0,200])
 plt.savefig(path + "y_timeseries" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()
 

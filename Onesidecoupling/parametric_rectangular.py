@@ -19,13 +19,13 @@ y = 1
 q = 1
 p = 1
 par0 = x,y,p,q
-k_up = np.arange(0.01,2.5, 0.01)
+k_up = np.arange(0.01,28, 0.1)
 k_down = k_up[::-1]
 
 gamma = 0.2
 mu = 0.2
 beta = 1
-alpha = np.arange(0.01, 3, 0.1)
+alpha = np.arange(0.01, 25, 0.1)
 
 # [Functions]____________________________________________________________________________________________________________________
 
@@ -36,10 +36,12 @@ def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 
 def approx(listofnum, tol):
      mean = np.mean(listofnum)
-     boolean = [abs(i - mean) / mean * 100 for i in listofnum]
+     boolean = [abs(i - mean) / mean for i in listofnum]
      
      for num in boolean:
           if num > tol:
+               
+               print("o",num, listofnum)
                return math.nan
           else:
                return mean
@@ -57,12 +59,10 @@ for l in range(len(alpha)):
             sol = OnesidedCoupling(par0, t, keep, k_up[m], mu, gamma, alpha[l], beta).duffvdpsolver()
             par0 = sol[-1]
             amp = approx(compute_amplitude(par0, t, keep, k_up[m], mu, gamma, alpha[l], beta), 0.1)
-            print(amp)
             try:
                 if math.isnan(amp) == True:
                     index.append(("alpha: ", alpha[l],"k: ",k_up[m]))
             except:
-                print(amp)
                 index.append(("alpha: ", alpha[l],"k: ",k_up[m]))
             up[l,m] = amp
     
@@ -72,7 +72,7 @@ plt.xlabel("k in a.u.",fontsize = 25)
 plt.ylabel("$\\omega _y$ in Hz",fontsize = 25)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.3f'))
-plt.xticks( np.linspace(round(min(k_up),2),round(max(k_up),2), 3), fontsize = 18)
+plt.xticks( np.linspace(round(min(k_up),2),round(max(k_up),2), 6), fontsize = 18)
 plt.yticks(np.linspace(min(alpha),max(alpha), 5),fontsize = 18)
 plt.colorbar().ax.set_ylabel('A$_y$ in a.u.', fontsize = 20)
 

@@ -1,0 +1,6 @@
+parameter   value
+k       0.1
+gamma   0.1
+beta    1.0
+alpha   1.0
+mu      0.2
