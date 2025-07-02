@@ -69,7 +69,7 @@ for l in range(len(alpha)):
 plt.figure(figsize= (10,10))
 plt.imshow(up, extent=[min(k_up),max(k_up),min(alpha),max(alpha)], cmap = "viridis", origin='lower')
 plt.xlabel("k in a.u.",fontsize = 25)
-plt.ylabel("$\\omega _y$ in Hz",fontsize = 25)
+plt.ylabel("$\\omega _y$ in kHz",fontsize = 25)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.3f'))
 plt.xticks( np.linspace(round(min(k_up),2),round(max(k_up),2), 6), fontsize = 18)

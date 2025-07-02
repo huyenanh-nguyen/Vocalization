@@ -337,9 +337,85 @@ class OnesidedCoupling:
 
             peaks.append(find_peaks(sol[-keep:, i], height=(np.repeat(sol[-keep:, i][maxima[i]], keep)- np.repeat(sol[-keep:, i][maxima[i]]*0.1, keep), np.repeat(sol[-keep:, i][maxima[i]], keep))))
         return peaks
+    
+    def Vanderpolperiod(self):
+        """
+        calculating the period of the last 10 peaks of the van der Pol oscillator (avoiding transientenphase)
 
+        Args:
+            count (int): how many peaks, amplitude, or whatever will get used to calculate the mean of a specific value
+
+        Returns:
+            List: index 0 -> x (vdp)
+        """
+        index_peak = self.find_peaks_max()[0][0]
+        t = self.t[-self.t_keep:] 
+
+        peak_t = [t[k] for k in index_peak]
+        period = np.mean(np.diff(peak_t)[-10:])
+
+        return period
+
+
+
+    def y_periodic_peak(self):
+        """
+        For Duffing (y), return the indices of the peaks every specific period T.
+
+
+        Returns:
+            List: A list of the Parameters and within the list it returns the peak_index and the properties. Is there an X given, 
+            there will be a dict with the key "peak_heights", and that is what we need for the amplitudes.\n
+            So when i want to get the peak height of the x_plot or y_plot then i have to type:
+            peaks[0][1]['peak_heights'] 
+            0 -> x
+            1 -> y
+            2 -> p
+            3 -> q
+
+            second index is for accessing the peak height (aka amplitude).
+
+            peak[i][0] will return the Index where the peaks are
+        """
+        sol = self.duffvdpsolver()
+        maxima = self.maximumofplot()
+        vdp_index = self.find_peaks_max()[0][0]
+        duffing_height = np.mean(self.find_peaks_max()[1][1]["peak_heights"])
+
+        peaks = []
+
+        for ind in vdp_index:
+            try:
+                # print(sol[ind-1000:ind+1000,i])
+                length = len(sol[ind-200:ind+1000,1])
+
+                peaks.append(find_peaks(sol[ind-200:ind+1000,1], height = (- np.repeat(duffing_height * 0.5, length),np.repeat(duffing_height+2, length))))
+            except:
+                pass
+        
+
+        y_peaks = []
+        for o in range(len(peaks)):
+            y_peaks.append(peaks[0][1]['peak_heights'][-10:])
+        return np.concatenate(y_peaks)
     
 
 
 
 
+t_step = 0.01
+t_last = 100 # 50h -> 1 point represent 1h
+t = np.arange(0, 5000, t_step)
+keep = int(t_last / t_step)
+x = 1
+y = 1
+p = 1
+q = 1
+par = x,y,p,q
+k = 0.1
+gamma = 0.1
+mu = 2.0 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
+beta = 1
+alpha = 0.2
+
+# print(OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).y_periodic_peak())# [1][1]['peak_heights'][-20:])

@@ -17,11 +17,11 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0.0
+k = 0.1
 gamma = 0.1
-mu = 0.2
-beta = 1
-alpha = 1
+mu = 2.0
+beta = 1.0
+alpha = 0.2
 lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
 
 xsol = lilie.x_solv()
@@ -41,7 +41,7 @@ plt.xlabel("x in a.u.",fontsize = 20)
 plt.ylabel("p in a.u.",fontsize = 20)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 plt.xticks(np.linspace(round(min(xsol),2),round(max(xsol),2), 5), fontsize = 20)
-plt.yticks(fontsize = 20)
+plt.yticks(np.linspace(round(min(psol),2),round(max(psol),2), 5),fontsize = 20)
 plt.savefig( path + "x_phaseplane" + ".png", dpi =  300, bbox_inches = "tight")
 plt.show()
 
@@ -51,7 +51,8 @@ plt.plot(ysol[-keep:],qsol[-keep:])   # with transient
 plt.xlabel("y in a.u.",fontsize = 20)
 plt.ylabel("q in a.u.",fontsize = 20)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 plt.xticks(np.linspace(round(min(ysol),2),round(max(ysol),2), 5), fontsize = 20)
-plt.yticks(fontsize = 20)
+plt.yticks(np.linspace(round(min(qsol),2),round(max(qsol),2), 5), fontsize = 20)
 plt.savefig(path +"y_phaseplane" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()

@@ -19,11 +19,11 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0.0
+k = 0.1
 gamma = 0.1
-mu = 0.2
-beta = 1
-alpha = 1
+mu = 2.0
+beta = 1.0
+alpha = 0.2
 lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
 
 xsol = lilie.x_solv()
@@ -43,12 +43,12 @@ plt.plot(t, xsol, label = f"k: {k:.2f}")
 plt.ylabel("x in a.u.", fontsize = 20)
 x_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
 # plt.legend(fontsize = 16, loc = "upper right")
-plt.xlabel("t in s", fontsize = 20)
+plt.xlabel("t in ms", fontsize = 20)
 plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
 plt.ylim([-3, 3])
 plt.xlim([0,200])
-plt.savefig(path + "x_timeseries" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path + "x_timeseries_mu2" + ".png", dpi =  300, bbox_inches = "tight")
 plt.show()
 
 # [y-timeseries]
@@ -57,12 +57,12 @@ plt.plot(t, ysol, label = f"k: {k:.2f}")
 plt.ylabel("y in a.u.", fontsize = 20)
 y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
 # plt.legend(fontsize = 16, loc = "upper left")
-plt.xlabel("t in s", fontsize = 20)
+plt.xlabel("t in ms", fontsize = 20)
 plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
 plt.ylim([-3, 3])
 plt.xlim([0,200])
-plt.savefig(path + "y_timeseries" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path + "y_timeseries_withcoupling_mu2" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()
 
 
