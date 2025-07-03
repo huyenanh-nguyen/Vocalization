@@ -22,7 +22,7 @@ par = x,y,p,q
 k = 0.1
 gamma = 0.1
 mu = 2.0
-beta = 1.0
+beta = 0.5
 alpha = 0.2
 lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
 
@@ -62,7 +62,7 @@ plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
 plt.ylim([-3, 3])
 plt.xlim([0,200])
-plt.savefig(path + "y_timeseries_withcoupling_mu2" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path + "y_timeseries_withcoupling" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()
 
 

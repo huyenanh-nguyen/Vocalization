@@ -19,13 +19,13 @@ y = 1
 q = 1
 p = 1
 par0 = x,y,p,q
-k_up = np.arange(0.01,28, 0.1)
+k_up = np.arange(0, 10, 0.01)
 k_down = k_up[::-1]
 
-gamma = 0.2
-mu = 0.2
+gamma = 0.1
+mu = 2.0
 beta = 1
-alpha = np.arange(0.01, 25, 0.1)
+alpha = np.linspace(0.0, 3, 30)
 
 # [Functions]____________________________________________________________________________________________________________________
 
@@ -67,7 +67,12 @@ for l in range(len(alpha)):
             up[l,m] = amp
     
 plt.figure(figsize= (10,10))
-plt.imshow(up, extent=[min(k_up),max(k_up),min(alpha),max(alpha)], cmap = "viridis", origin='lower')
+plt.imshow(up, 
+           extent=[min(k_up),max(k_up),min(alpha),max(alpha)], 
+           cmap = "viridis", 
+           origin='lower',
+           interpolation='none',
+           aspect='equal')
 plt.xlabel("k in a.u.",fontsize = 25)
 plt.ylabel("$\\omega _y$ in kHz",fontsize = 25)
 plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))

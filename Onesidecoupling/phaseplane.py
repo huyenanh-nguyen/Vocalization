@@ -20,7 +20,7 @@ par = x,y,p,q
 k = 0.1
 gamma = 0.1
 mu = 2.0
-beta = 1.0
+beta = 0.5
 alpha = 0.2
 lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
 
@@ -54,5 +54,5 @@ plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 plt.xticks(np.linspace(round(min(ysol),2),round(max(ysol),2), 5), fontsize = 20)
 plt.yticks(np.linspace(round(min(qsol),2),round(max(qsol),2), 5), fontsize = 20)
-plt.savefig(path +"y_phaseplane" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path +"y_phaseplane_withouttransient" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()

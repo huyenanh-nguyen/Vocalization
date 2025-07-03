@@ -193,3 +193,4 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 /path.txt
+/parameters.txt

@@ -22,8 +22,8 @@ par = x,y,p,q
 k = 0.1
 gamma = 0.1
 mu = 2.0 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
-beta = 1
-alpha = [3.0]
+beta = 0.5
+alpha = [0.2]
 par0 = x,y,p,q
 k_up = np.arange(0, 10, 0.01)
 k_down = k_up[::-1]
@@ -36,7 +36,7 @@ def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
     return amp
 
 def compute_all_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
-    amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).getting_all_peaks()[1][1]['peak_heights'][-20:]
+    amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).getting_all_peaks()[1][1]['peak_heights'][-10:]
     return amp
 
 def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
@@ -64,14 +64,14 @@ def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 
 #     for e,k in enumerate(k_up):
 #         try:
-#             plt.plot([k]*20, amplitudes_up[e], "k.", markersize = 0.5)
+#             plt.plot([k]*len(amplitudes_up[e]), amplitudes_up[e], "k.", markersize = 0.5)
 #             print(amplitudes_up[e])
 #         except:
 #             None
 
 #     for j,w in enumerate(k_down):
 #         try:
-#             plt.plot([w]*20, amplitudes_down[j],"r.", markersize = 0.5)
+#             plt.plot([w]*len(amplitudes_down[j]), amplitudes_down[j],"r.", markersize = 0.5)
 #         except:
 #             None
 
@@ -84,54 +84,57 @@ def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 #     plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 20)
 #     plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.2f}", fontsize = 20)
 
-#     plt.yticks(fontsize = 20)
-#     plt.savefig(path +"Bifurcation" + str(i)+  ".png", dpi =  300, bbox_inches = "tight")
-    # plt.show()
+#     plt.yticks(np.linspace(-4,6,6), fontsize = 20)
+#     plt.savefig(path +"Bifurcation_max" + "alpha06"+  ".png", dpi =  300, bbox_inches = "tight")
+#     # plt.show()
 
 # [Bifurcation all peaks]__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
-# amplitudes_up = []
-# amplitudes_down = []
-# for i in range(len(alpha)):
-#     for f in k_up:
-#         sol = OnesidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
-#         par0 = sol[-1]
-#         amplitudes_up.append(compute_all_amplitude(par0, t, keep, f, mu, gamma,alpha[i], beta))
+amplitudes_up = []
+amplitudes_down = []
+for i in range(len(alpha)):
+    for f in k_up:
+        sol = OnesidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
+        par0 = sol[-1]
+        amplitudes_up.append(compute_all_amplitude(par0, t, keep, f, mu, gamma,alpha[i], beta))
 
 
-#     par0 = sol[-1]
+    par0 = sol[-1]
 
-#     for j in k_down:
-#         sol = OnesidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
-#         par0 = sol[-1]  
-#         amplitudes_down.append(compute_all_amplitude(par0, t, keep, j, mu, gamma, alpha[i], beta))
+    for j in k_down:
+        sol = OnesidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
+        par0 = sol[-1]  
+        amplitudes_down.append(compute_all_amplitude(par0, t, keep, j, mu, gamma, alpha[i], beta))
 
-#     for e,k in enumerate(k_up):
-#         try:
-#             plt.plot([k]*20, amplitudes_up[e], "k.", markersize = 0.5)
-#             print(amplitudes_up[e])
-#         except:
-#             None
+    for e,k in enumerate(k_up):
+        try:
+            plt.plot([k]*len(amplitudes_up[e]), amplitudes_up[e], "k.", markersize = 0.5)
+            print(amplitudes_up[e])
+        except:
+            None
 
-#     for j,w in enumerate(k_down):
-#         try:
-#             plt.plot([w]*20, amplitudes_down[j],"r.", markersize = 0.5)
-#         except:
-#             None
+    for j,w in enumerate(k_down):
+        try:
+            plt.plot([w]*len(amplitudes_down[j]), amplitudes_down[j],"r.", markersize = 0.5)
+        except:
+            None
 
 
-
-#     plt.xlabel("k", fontsize = 20)
-#     plt.ylabel("A$_{y}$ in a.u.", fontsize = 20)
-#     plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-#     plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.4f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.4f}", fontsize = 20)
-#     plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 20)
-#     plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.2f}", fontsize = 20)
-
-#     plt.yticks(fontsize = 20)
-#     plt.savefig(path +"Bifurcation_allpeaks_" + "alpha3"+  ".png", dpi =  300, bbox_inches = "tight")
-#     print(alpha[i])
+    plt.xlabel("k", fontsize = 20)
+    plt.ylabel("A$_{y}$ in a.u.", fontsize = 20)
+    plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+    plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.4f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.4f}", fontsize = 20)
+    plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 20)
+    plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.2f}", fontsize = 20)
+    
+    lines = [3, 3.8, 5, 8, 8.6]
+    for g in lines:
+        plt.axvline(x = g, color = "r") 
+    
+    plt.yticks(fontsize = 20)
+    plt.savefig(path +"Bifurcation_allpeaks_avlines" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
+    print(alpha[i])
 
 
 
@@ -178,7 +181,7 @@ def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 #     plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.2f}", fontsize = 20)
 
 #     plt.yticks(fontsize = 20)
-#     plt.savefig(path +"Bifurcation_periodic_" + "alpha3"+  ".png", dpi =  300, bbox_inches = "tight")
+#     plt.savefig(path +"Bifurcation_periodic_" + "alpha1"+  ".png", dpi =  300, bbox_inches = "tight")
 #     print(alpha[i])
 
 
