@@ -21,8 +21,8 @@ p = 1
 par = x,y,p,q
 k = 0.1
 gamma = 0.1
-mu = 2.0 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
-beta = 0.5
+mu = 5 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
+beta = 0.3
 alpha = [0.2]
 par0 = x,y,p,q
 k_up = np.arange(0, 10, 0.01)
@@ -114,11 +114,11 @@ for i in range(len(alpha)):
         except:
             None
 
-    for j,w in enumerate(k_down):
-        try:
-            plt.plot([w]*len(amplitudes_down[j]), amplitudes_down[j],"r.", markersize = 0.5)
-        except:
-            None
+    # for j,w in enumerate(k_down):
+    #     try:
+    #         plt.plot([w]*len(amplitudes_down[j]), amplitudes_down[j],"r.", markersize = 0.5)
+    #     except:
+    #         None
 
 
     plt.xlabel("k", fontsize = 20)
@@ -126,14 +126,14 @@ for i in range(len(alpha)):
     plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
     plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.4f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.4f}", fontsize = 20)
     plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 20)
-    plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.2f}", fontsize = 20)
+    plt.title(label = "$\\mu$ = " + f"{mu:.2f}" + ", $\\gamma$ = " + f"{gamma:.2f}" + ", $\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\beta$ = " + f"{beta:.2f}", fontsize = 20)
     
-    lines = [3, 3.8, 5, 8, 8.6]
-    for g in lines:
-        plt.axvline(x = g, color = "r") 
+    # lines = [0.1, 2.5, 3.0, 4.0, 5.0]
+    # for g in lines:
+    #     plt.axvline(x = g, color = "r") 
     
     plt.yticks(fontsize = 20)
-    plt.savefig(path +"Bifurcation_allpeaks_avlines" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
+    plt.savefig(path +"Bifurcation_allpeaks_ß03_y01_mu5" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
     print(alpha[i])
 
 

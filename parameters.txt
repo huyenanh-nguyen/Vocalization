@@ -4,3 +4,21 @@ gamma   0.1
 beta    1.0
 alpha   1.0
 mu      0.2
+
+
+
+Parameter settings
+Timeseries (Summary of PDF)
+
+Für k = 0 sieht man nichts bei duffing, es dämpft aus
+Bei k = 0.01 sieht man die lorenzkurve
+Bei k = 0.1 hat man schon die erste hysterese und bei k = 21 ist chaos
+Aber wie sieht es aus für mu = 2 und auch bei verschiedene alphas?
+
+Man kann bei der zeitreihen eine lorenzattraktor erkennen, die obere und untere grenzzyklus anzeigen (wenn die dämpfung sehr sehr hoch ist, gamma = 1. siehe bild)
+
+Bei larges peak sieht man hyseresis
+Bei alle perioden sieht man perioden verdopplung oder chaos
+Aber alle peaks kann man alles sehen
+Für große k ist alpha irrelevant, da beta dominiert -> da wird eher beta perioden bestimmend. Deswegen. Ist es besser kleinere ka werte
+Beta ist da damit duffing nicht ins unendliche geht mit der amplitude
