@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 from matplotlib.ticker import FormatStrFormatter
-from mainscript import OnesidedCoupling
+from mainscript import TwosidedCoupling
 
 
 # [Parameters]________________________________________________________________________________________________________________________________________________
@@ -12,7 +12,7 @@ with open(str(Path.cwd()) + "/path.txt") as f:
 
 t_step = 0.01
 t_last = 100 # 50h -> 1 point represent 1h
-t = np.arange(0, 100, t_step)
+t = np.arange(0, 150, t_step)
 keep = int(t_last / t_step)
 x = 1
 y = 1
@@ -23,24 +23,24 @@ k = 0.1
 gamma = 0.1
 mu = 2 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
 beta = 0.3
-alpha = [0.2]
+alpha = [0.3]
 par0 = x,y,p,q
-k_up = np.arange(0, 10, 0.01)
+k_up = np.linspace(0, 1, 100)
 k_down = k_up[::-1]
 
 
 # [Functions]____________________________________________________________________________________________________________________
 
 def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
-    amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'][-10:]
+    amp = TwosidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'][-10:]
     return amp
 
 def compute_all_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
-    amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).getting_all_peaks()[1][1]['peak_heights'][-10:]
+    amp = TwosidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).getting_all_peaks()[1][1]['peak_heights'][-10:]
     return amp
 
 def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
-    amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).y_periodic_peak()
+    amp = TwosidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).y_periodic_peak()
     return amp
 
 # [Bifurcation Duffing_ kchanges, maximal peaks]____________________________________________________________________________________________________________________
@@ -50,7 +50,7 @@ def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 # amplitudes_down = []
 # for i in range(len(alpha)):
 #     for f in k_up:
-#         sol = OnesidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
+#         sol = TwosidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
 #         par0 = sol[-1]
 #         amplitudes_up.append(compute_amplitude(par0, t, keep, f, mu, gamma,alpha[i], beta))
 
@@ -58,7 +58,7 @@ def compute_periodic_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 #     par0 = sol[-1]
 
 #     for j in k_down:
-#         sol = OnesidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
+#         sol = TwosidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
 #         par0 = sol[-1]  
 #         amplitudes_down.append(compute_amplitude(par0, t, keep, j, mu, gamma, alpha[i], beta))
 
@@ -95,7 +95,7 @@ amplitudes_up = []
 amplitudes_down = []
 for i in range(len(alpha)):
     for f in k_up:
-        sol = OnesidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
+        sol = TwosidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
         par0 = sol[-1]
         amplitudes_up.append(compute_all_amplitude(par0, t, keep, f, mu, gamma,alpha[i], beta))
 
@@ -103,7 +103,7 @@ for i in range(len(alpha)):
     # par0 = sol[-1]
 
     # for j in k_down:
-    #     sol = OnesidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
+    #     sol = TwosidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
     #     par0 = sol[-1]  
     #     amplitudes_down.append(compute_all_amplitude(par0, t, keep, j, mu, gamma, alpha[i], beta))
 
@@ -128,13 +128,13 @@ for i in range(len(alpha)):
     plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 20)
     plt.title(label = "$\\mu$ = " + f"{mu:.2f}" + ", $\\gamma$ = " + f"{gamma:.2f}" + ", $\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\beta$ = " + f"{beta:.2f}", fontsize = 20)
     
-    lines = [0.1, 2.5, 3.0, 4.0, 5.0, 8.0]
+    lines = [0.01, 0.1, 0.2, 0.4, 0.8]
     cmap = plt.get_cmap('viridis', len(lines))
     for g, z in enumerate(lines):
         plt.axvline(x = z, color = cmap(g)) 
     
     plt.yticks(fontsize = 20)
-    plt.savefig(path +"Bifurcation_allpeaks_ß03_y01_mu2_avlines" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
+    plt.savefig(path +"Bifurcation_allpeaks_ß03_y01_mu2_av_" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
     print(alpha[i])
 
 
@@ -147,7 +147,7 @@ for i in range(len(alpha)):
 # amplitudes_down = []
 # for i in range(len(alpha)):
 #     for f in k_up:
-#         sol = OnesidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
+#         sol = TwosidedCoupling(par0, t, keep, f, mu, gamma, alpha[i], beta).duffvdpsolver()
 #         par0 = sol[-1]
 #         amplitudes_up.append(compute_periodic_amplitude(par0, t, keep, f, mu, gamma,alpha[i], beta))
 
@@ -155,7 +155,7 @@ for i in range(len(alpha)):
 #     par0 = sol[-1]
 
 #     for j in k_down:
-#         sol = OnesidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
+#         sol = TwosidedCoupling(par0, t, keep, j, mu, gamma, alpha[i], beta).duffvdpsolver()
 #         par0 = sol[-1]  
 #         amplitudes_down.append(compute_periodic_amplitude(par0, t, keep, j, mu, gamma, alpha[i], beta))
 
@@ -215,7 +215,7 @@ for i in range(len(alpha)):
 # amplitudes_down = []
 
 # for f in alpha_up:
-#     sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
+#     sol = TwosidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
 #     par0 = sol[-1]
 #     amplitudes_up.append(compute_amplitude(par0, t, keep, k, mu, gamma, f, beta))
 
@@ -223,7 +223,7 @@ for i in range(len(alpha)):
 # par0 = sol[-1]
 
 # for j in alpha_down:
-#     sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
+#     sol = TwosidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
 #     par0 = sol[-1]  
 #     amplitudes_down.append(compute_amplitude(par0, t, keep, k, mu, gamma, j, beta))
 

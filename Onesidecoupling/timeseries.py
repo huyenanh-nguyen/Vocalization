@@ -101,7 +101,7 @@ from mainscript import OnesidedCoupling
 # # print("time Duffing: ", time_amp_duff)
 
 
-# [multiple plots]_______________________________________________________________________________________________________________________________________________________________________________________________________
+# [multiple plots Duffing]_______________________________________________________________________________________________________________________________________________________________________________________________________
 
 with open(str(Path.cwd()) + "/path.txt") as f:
   path = f.read()
@@ -115,28 +115,30 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0.1
+k_up = [0.1, 2.5, 3, 4, 5, 8]
 gamma = 0.1
 mu = 2.0
-betas = [0.0, 0.1, 0.3, 0.5,1.0,2.0]
+beta = 0.3
 alpha = 0.2
 
 app = 3
 
-for index, b in enumerate(betas):
+for index, k in enumerate(k_up):
 
-  y_mul_sol = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, b).y_solv()
+  y_mul_sol = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).y_solv()
 
-  period_vdp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, b).period(10)[1]
-  f_vdp = 1/period_vdp
-  w_vdp = 2 * np.pi * f_vdp
-  amp_vdp = np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, b).find_peaks_max()[0][1]['peak_heights'])
-  time_amp_vdp = [t[i] for i in OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, b).find_peaks_max()[1][0][-10:]]
+  period = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).period(10)[1]
+  f = 1/period
+  w = 2 * np.pi * f
+  amp = np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'])
+  time_amp = [t[i] for i in OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][0][-10:]]
 
-  print("Period van der Pol: ", round(period_vdp, app))
-  print("frequency van der Pol: ", round(f_vdp, app))
-  print("angular frequency van der Pol: ", round(w_vdp, app))
-  print("amplitude van der Pol: ", round(amp_vdp, app))
+  print(str(k))
+  print("Period Duffing: ", round(period, app))
+  print("frequency Duffing: ", round(f, app))
+  print("angular frequency Duffing: ", round(w, app))
+  print("amplitude Duffing: ", round(amp, app))
+  print(" ")
 
 #   plt.plot(t, y_mul_sol, label = f"ß: {b:.2f}")
 # plt.ylabel("y in a.u.", fontsize = 20)
@@ -149,3 +151,45 @@ for index, b in enumerate(betas):
 # plt.xlim([0,150])
 # plt.savefig(path + "y_timeseries_k01_ßhigh" + ".png", dpi =  300, bbox_inches = "tight")
 # plt.show()
+
+
+
+
+
+# [multiple plots Van der Pol]_______________________________________________________________________________________________________________________________________________________________________________________________________
+
+# with open(str(Path.cwd()) + "/path.txt") as f:
+#   path = f.read()
+
+# t_step = 0.01
+# t_last = 100 # 50h -> 1 point represent 1h
+# t = np.arange(0, 5000, t_step)
+# keep = int(t_last / t_step)
+# x = 1
+# y = 1
+# q = 1
+# p = 1
+# par = x,y,p,q
+# k = 0.1
+# gamma = 0.1
+# mu = [0.5,1.0,2.0,3.0,5.0,10.0,20.0]
+# beta = 0.3
+# alpha = 0.2
+
+# app = 3
+
+# for index, m in enumerate(mu):
+
+#   x_mul_sol = OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).x_solv()
+
+#   period_vdp = OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).period(10)[0]
+#   f_vdp = 1/period_vdp
+#   w_vdp = 2 * np.pi * f_vdp
+#   amp_vdp = np.mean(OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).find_peaks_max()[0][1]['peak_heights'])
+#   time_amp = [t[i] for i in OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).find_peaks_max()[0][0][-10:]]
+
+#   print("Period vdp: ", round(period_vdp, app))
+#   print("frequency vdp: ", round(f_vdp, app))
+#   print("angular frequency vdp: ", round(w_vdp, app))
+#   print("amplitude vdp: ", round(amp_vdp, app))
+#   print(" ")
