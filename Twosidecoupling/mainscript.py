@@ -30,8 +30,8 @@ def linearduffingvdp(par : list, t : list, k : float, mu : float, gamma : float,
     x,y,p,q = par
     dx = p
     dy = q
-    dp = mu * (1-x**2)*p - x + k *( x + y)
-    dq = - gamma * q - alpha * y - beta * y**3 + k * ( x + y)
+    dp = mu * (1-x**2)*p - x
+    dq = - gamma * q - (alpha + k * x) * y - beta * y**3 
 
     return [dx,dy,dp,dq]
 

@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 from matplotlib.ticker import FormatStrFormatter
-from mainscript import OnesidedCoupling
+from mainscript import TwosidedCoupling
+
 from matplotlib.colors import ListedColormap
 import matplotlib.patches as mpatches
 
@@ -30,7 +31,7 @@ alpha_down = alpha_up[::-1]
 # [Functions]____________________________________________________________________________________________________________________
 
 def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
-    amp = np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'][-10:])
+    amp = np.mean(TwosidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'][-10:])
     return amp
 
 
@@ -42,7 +43,7 @@ amplitudes_up = []
 amplitudes_down = []
 
 for f in alpha_up:
-    sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
+    sol = TwosidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
     par0 = sol[-1]
     print(par0)
     amplitudes_up.append(compute_amplitude(par0, t, keep, k, mu, gamma, f, beta))
@@ -50,7 +51,7 @@ for f in alpha_up:
 
 par0 = sol[-1]
 for j in alpha_down:
-    sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
+    sol = TwosidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
     par0 = sol[-1]  
     print(par0)
     amplitudes_down.append(compute_amplitude(par0, t, keep, k, mu, gamma, j, beta))
