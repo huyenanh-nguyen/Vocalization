@@ -21,11 +21,11 @@ p = 1
 par = x,y,p,q
 k = 0.1
 gamma = 0.1
-mu = 5 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
+mu = 2 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
 beta = 0.3
 alpha = [0.2]
 par0 = x,y,p,q
-k_up = np.linspace(0, 10, 20000)
+k_up = np.arange(0, 10, 0.01)
 k_down = k_up[::-1]
 
 
@@ -110,33 +110,62 @@ for i in range(len(alpha)):
     for e,k in enumerate(k_up):
         try:
             plt.plot([k]*len(amplitudes_up[e]), amplitudes_up[e], "k.", markersize = 0.5)
-            print(amplitudes_up[e])
         except:
             None
 
     # for j,w in enumerate(k_down):
     #     try:
     #         plt.plot([w]*len(amplitudes_down[j]), amplitudes_down[j],"r.", markersize = 0.5)
+
     #     except:
     #         None
 
 
+
     plt.xlabel("k", fontsize = 14)
-    plt.ylabel("A$_{y}$ in a.u.", fontsize = 14)
+    plt.ylabel("A$_{y}$ in cm", fontsize = 14)
     plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-    plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.4f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.4f}", fontsize = 14)
+
     plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 12)
-    plt.title(label = "$\\mu$ = " + f"{mu:.2f}" + ", $\\gamma$ = " + f"{gamma:.2f}" + ", $\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\beta$ = " + f"{beta:.2f}", fontsize = 14)
+    # plt.title(label = "$\\mu$ = " + f"{mu:.2f}" + ", $\\gamma$ = " + f"{gamma:.2f}" + ", $\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\beta$ = " + f"{beta:.2f}", fontsize = 14)
     
-    # lines = [0.1, 2.5, 3.0, 4.0, 5.0, 8.0]
-    # cmap = plt.get_cmap('viridis', len(lines))
-    # for g, z in enumerate(lines):
-    #     plt.axvline(x = z, color = cmap(g)) 
-    
+    lines = [0.1,4.0, 5.0, 8.0]
+    cmap = plt.get_cmap('viridis', len(lines))
+    for g, z in enumerate(lines):
+        plt.axvline(x = z, color = cmap(g)) 
     plt.yticks(fontsize = 12)
-    plt.savefig(path +"uniBif_smallk_ß03_y01_mu5_" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
+    plt.savefig(path +"Bifurkation_ß03_y01_mu2_av" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
     print(alpha[i])
 
+######## Multiple bifurcation
+
+# beta_change = [0.001, 0.05, 0.1]
+# fig, axs = plt.subplots(len(beta_change), constrained_layout=True)
+
+# for b_index, b in enumerate(beta_change):
+#     amplitudes_up = []
+#     amplitudes_down = []
+#     for i,_ in enumerate(alpha):
+#         for f in k_up:
+#             sol = OnesidedCoupling(par0, t, keep, f, mu, b, alpha[i], beta).duffvdpsolver()
+#             par0 = sol[-1]
+#             amplitudes_up.append(compute_all_amplitude(par0, t, keep, f, mu, b, alpha[i], beta))
+
+#         for e,k in enumerate(k_up):
+#             try:
+#                 axs[b_index].plot([k]*len(amplitudes_up[e]), amplitudes_up[e], "k.", markersize = 0.5)
+                
+#             except:
+#                 None
+
+#     axs[b_index].set_title("$\\gamma$ = " + f"{b:.2f}")
+
+    
+    
+# fig.supxlabel("k", fontsize = 14)
+# fig.supylabel("A$_{y}$ in cm", fontsize = 14)
+# plt.savefig(path +"bifurcation_mu_variation" + ".png", dpi =  400, bbox_inches = "tight")
+# plt.show()
 
 
 
