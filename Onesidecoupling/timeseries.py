@@ -19,9 +19,9 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0
+k = 1.3
 gamma = 0.1
-mu = 2.0
+mu = 10.0
 beta = 0.3
 alpha = 0.2
 lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
@@ -53,17 +53,17 @@ qsol = lilie.q_solv()
 
 # [y-timeseries]
 
-# plt.plot(t, ysol, label = f"k: {k:.2f}")
-# plt.ylabel("y in cm", fontsize = 14)
-# y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
-# # plt.legend(fontsize = 16, loc = "upper left")
-# plt.xlabel("t in ms", fontsize = 14)
-# plt.xticks(fontsize = 12)
-# plt.yticks(fontsize = 12)
+plt.plot(t, ysol, label = f"k: {k:.2f}")
+plt.ylabel("y in cm", fontsize = 14)
+y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
+# plt.legend(fontsize = 16, loc = "upper left")
+plt.xlabel("t in ms", fontsize = 14)
+plt.xticks(fontsize = 12)
+plt.yticks(fontsize = 12)
 # plt.ylim([-3, 3])
-# plt.xlim([0,200])
-# plt.savefig(path + "y_timeseries_k0_ß03_y01_a02_mu2" + ".png", dpi =  300, bbox_inches = "tight")
-# plt.show()
+plt.xlim([0,400])
+plt.savefig(path + "y_timeseries_k0_ß03_y01_a02_mu10" + ".png", dpi =  300, bbox_inches = "tight")
+plt.show()
 
 
 
@@ -103,55 +103,55 @@ app = 3
 
 # [multiple plots Duffing]_______________________________________________________________________________________________________________________________________________________________________________________________________
 
-with open(str(Path.cwd()) + "/path.txt") as f:
-  path = f.read()
+# with open(str(Path.cwd()) + "/path.txt") as f:
+#   path = f.read()
 
-t_step = 0.01
-t_last = 100 # 50h -> 1 point represent 1h
-t = np.arange(0, 5000, t_step)
-keep = int(t_last / t_step)
-x = 1
-y = 1
-q = 1
-p = 1
-par = x,y,p,q
-k_up = 0.1
-gamma = 0.1
-mu = 2.0
-beta = 0.3
-alpha = 0.2
+# t_step = 0.01
+# t_last = 100 # 50h -> 1 point represent 1h
+# t = np.arange(0, 5000, t_step)
+# keep = int(t_last / t_step)
+# x = 1
+# y = 1
+# q = 1
+# p = 1
+# par = x,y,p,q
+# k_up = 0.1
+# gamma = 0.1
+# mu = 10.0
+# beta = 0.3
+# alpha = 0.2
 
-app = 3
-cmap = plt.get_cmap('viridis', len([0.1,0.3,1.0,5.0]))
+# app = 3
+# cmap = plt.get_cmap('viridis', len([0.1,0.3,1.0,5.0]))
 
-for index, b in enumerate([0.2, 1,5]):
+# for index, b in enumerate([0.1,1.3, 1.5 , 8.0]):
 
-  y_mul_sol = OnesidedCoupling(par, t, keep, k_up, mu, gamma, b, beta).y_solv()
+#   y_mul_sol = OnesidedCoupling(par, t, keep, b, mu, gamma, alpha, beta).y_solv()
 
-  period = OnesidedCoupling(par, t, keep, k_up, mu, gamma, b, beta).period(10)[1]
-  f = 1/period
-  w = 2 * np.pi * f
-  amp = np.mean(OnesidedCoupling(par, t, keep, k_up, mu, gamma, b, beta).find_peaks_max()[1][1]['peak_heights'])
-  time_amp = [t[i] for i in OnesidedCoupling(par, t, keep, k_up, mu, gamma, b, beta).find_peaks_max()[1][0][-10:]]
+#   period = OnesidedCoupling(par, t, keep, b, mu, gamma, alpha, beta).period(10)[1]
+#   f = 1/period
+#   w = 2 * np.pi * f
+#   amp = np.mean(OnesidedCoupling(par, t, keep, b, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'])
+#   time_amp = [t[i] for i in OnesidedCoupling(par, t, keep, b, mu, gamma, alpha, beta).find_peaks_max()[1][0][-10:]]
 
-  print(str(k))
-  print("Period Duffing: ", round(period, app))
-  print("frequency Duffing: ", round(f, app))
-  print("angular frequency Duffing: ", round(w, app))
-  print("amplitude Duffing: ", round(amp, app))
-  print(" ")
+#   print(str(b))
+#   print("Period Duffing: ", round(period, app))
+#   print("frequency Duffing: ", round(f, app))
+#   print("angular frequency Duffing: ", round(w, app))
+#   print("amplitude Duffing: ", round(amp, app))
+#   print(" ")
 
-  plt.plot(t, y_mul_sol, label = f"$\\alpha$: {b:.2f}", color = cmap(index))
-plt.ylabel("y in cm", fontsize = 20)
-# y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
-plt.legend(fontsize = 18, loc = "upper right")
-plt.xlabel("t in ms", fontsize = 20)
-plt.xticks(fontsize = 18)
-plt.yticks(fontsize = 18)
-plt.ylim([-3, 3])
-plt.xlim([0,150])
-plt.savefig(path + "y_timeseries_k01_alphhigh" + ".png", dpi =  300, bbox_inches = "tight")
-plt.show()
+#   plt.plot(t, y_mul_sol, label = f"$\\alpha$: {b:.2f}", color = cmap(index))
+# plt.ylabel("y in cm", fontsize = 20)
+# # y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
+# plt.legend(fontsize = 18, loc = "upper right")
+# plt.xlabel("t in ms", fontsize = 20)
+# plt.xticks(fontsize = 18)
+# plt.yticks(fontsize = 18)
+# plt.ylim([-3, 3])
+# plt.xlim([0,150])
+# plt.savefig(path + "y_timeseries_k01_alphhigh" + ".png", dpi =  300, bbox_inches = "tight")
+# plt.show()
 
 
 

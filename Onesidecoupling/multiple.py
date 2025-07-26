@@ -17,7 +17,7 @@ q = 1
 p = 1
 par = x,y,p,q
 gamma = 0.1
-mu = 2 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal
+mu = 10 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal
 beta = 0.3
 alpha = [0.2]
 par0 = x,y,p,q
@@ -125,8 +125,8 @@ def compute_all_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
     amp = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).getting_all_peaks()[1][1]['peak_heights'][-10:]
     return amp
  
-k_up = [0.1,4.0, 5.0, 8.0]
-cmap = plt.get_cmap('viridis', len(k_up))
+k_up = [0.1,1.3, 1.5, 8.0]
+cmap = plt.get_cmap('viridis', len(k_up)+2)
 
 
 for k in k_up:
@@ -152,13 +152,12 @@ for i in range(len(alpha)):
         except:
             pass
         
-ax_big.set_xlabel("k", fontsize=18)
-ax_big.set_ylabel("A$_{y}$ in cm", fontsize=18)
+ax_big.set_xlabel("k", fontsize=22)
+ax_big.set_ylabel("A$_{y}$ in cm", fontsize=22)
 ax_big.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax_big.set_xticks(np.linspace(round(min(k_up), 2), round(max(k_up), 2), 5))
-ax_big.tick_params(axis='x', labelsize=16)
-ax_big.tick_params(axis='y', labelsize=16)
-
+ax_big.tick_params(axis='x', labelsize=20)
+ax_big.tick_params(axis='y', labelsize=20)
 for g, z in enumerate(k_up):
     ax_big.axvline(x=z, color=cmap(g))
 
@@ -167,13 +166,16 @@ axs_right = []
 for i in range(len(k_up)):
     ax = fig.add_subplot(gs[i, 1])
     ax.plot(t[:keep], ysolv[i][:keep], label=f"k = {k_up[i]:.2f}", color=cmap(i))
-    ax.legend(loc='center right', bbox_to_anchor=(1.0, 0.5)).get_frame().set_alpha(None)
+    ax.legend(loc='center right', bbox_to_anchor=(1.0, 0.5), fontsize = 16).get_frame().set_alpha(None)
     if i == len(k_up) - 1:
-        ax.set_xlabel("t in ms", fontsize=18)
+        ax.set_xlabel("t in ms", fontsize=22)
     if i == 1:
-        ax.set_ylabel("y in cm", fontsize=18)
+        ax.set_ylabel("y in cm", fontsize=22)
     axs_right.append(ax)
-    ax.tick_params(axis='both', labelsize=16)
-plt.savefig(path +"bifurcation_timeseries" + ".png", dpi =  400, bbox_inches = "tight")
+    
+
+    ax.tick_params(axis='both', labelsize=20)
+
+plt.savefig(path +"Mu10alpha5_bifurcation_timeseries" + ".png", dpi =  400, bbox_inches = "tight")
 plt.show()
  

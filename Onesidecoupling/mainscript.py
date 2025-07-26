@@ -309,6 +309,7 @@ class OnesidedCoupling:
 
             peaks.append(find_peaks(sol[-keep:, i], height=(-np.repeat(sol[-keep:, i][maxima[i]], keep), np.repeat(sol[-keep:, i][maxima[i]], keep))))
         return peaks
+    
 
     def peak(self):
         """
@@ -399,23 +400,3 @@ class OnesidedCoupling:
             y_peaks.append(peaks[0][1]['peak_heights'][-10:])
         return np.concatenate(y_peaks)
     
-
-
-
-
-t_step = 0.01
-t_last = 100 # 50h -> 1 point represent 1h
-t = np.arange(0, 5000, t_step)
-keep = int(t_last / t_step)
-x = 1
-y = 1
-p = 1
-q = 1
-par = x,y,p,q
-k = 0.1
-gamma = 0.1
-mu = 2.0 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
-beta = 1
-alpha = 0.2
-
-# print(OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).y_periodic_peak())# [1][1]['peak_heights'][-20:])

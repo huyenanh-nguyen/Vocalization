@@ -21,9 +21,9 @@ p = 1
 par = x,y,p,q
 k = 0.1
 gamma = 0.1
-mu = 2 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
-beta = 0.3
-alpha = [0.3]
+mu = 10 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
+beta = 0.1
+alpha = [0.1]
 par0 = x,y,p,q
 k_up = np.linspace(0, 10, 100)
 k_down = k_up[::-1]
@@ -134,7 +134,7 @@ for i in range(len(alpha)):
     #     plt.axvline(x = z, color = cmap(g)) 
     
     plt.yticks(fontsize = 20)
-    plt.savefig(path +"Bifurcation_allpeaks_ß03_y01_mu2_av_" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
+    plt.savefig(path +"Bifurcation_allpeaks_ß01_y01_mu10_" + "alpha01"+  ".png", dpi =  400, bbox_inches = "tight")
     print(alpha[i])
 
 

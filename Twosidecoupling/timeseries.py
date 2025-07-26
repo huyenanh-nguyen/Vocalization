@@ -20,9 +20,9 @@ y = 1
 q = 1
 p = 1
 par = x,y,p,q
-k = 0.1
+k = 5
 gamma = 0.1
-mu = 2.0
+mu = 10.0
 beta = 0.3
 alpha = 0.2
 lilie = TwosidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
@@ -47,9 +47,9 @@ x_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + 
 plt.xlabel("t in ms", fontsize = 20)
 plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
-plt.ylim([-3, 3])
+# plt.ylim([-3, 3])
 plt.xlim([0,200])
-plt.savefig(path + "x_timeseries_mu2_k1" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path + "x_timeseries_mu10_k5_ß03_a02" + ".png", dpi =  300, bbox_inches = "tight")
 plt.show()
 
 # [y-timeseries]
@@ -61,9 +61,9 @@ y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + 
 plt.xlabel("t in ms", fontsize = 20)
 plt.xticks(fontsize = 20)
 plt.yticks(fontsize = 20)
-plt.ylim([-3, 3])
+# plt.ylim([-3, 3])
 plt.xlim([0,200])
-plt.savefig(path + "y_timeseries_k01_ß0" + ".png", dpi =  300, bbox_inches = "tight")
+plt.savefig(path + "y_timeseries_mu_k5_ß03_a02" + ".png", dpi =  300, bbox_inches = "tight")
 plt.show()
 
 
