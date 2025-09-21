@@ -5,12 +5,13 @@ from scipy.integrate import odeint
 from scipy.signal import find_peaks
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
-
+from matplotlib.ticker import FormatStrFormatter
 
 class Fastplots(OnesidedCoupling):
     """
     The runtime for those plots are approximatetly 10 seconds (depending on the time intervals t).
-    Timeseries and phase plane having a short runtime.
+    Timeseries and phase plane have a short runtime.
+    Also with this class we can get the metadata like period, frequency, angular frequency and Amplitude of the timeseries.
     """
 
     def __init__(self, par, t, keep, k, mu, gamma, alpha, beta, path):
@@ -197,8 +198,39 @@ class Fastplots(OnesidedCoupling):
             print("q Amplitude Duffing: ", round(q_amp_vdp, rounding))
 
         return None
+    
 
+    def phaseplane(self, variable, filename : str):
+        keep = self.t_keep
+        xsol = self.x_solv()[:keep]
+        ysol = self.y_solv()[:keep]
+        psol = self.p_solv()[:keep]
+        qsol = self.q_solv()[:keep]
 
+        if variable == "x":
+            plt.plot(xsol,psol)
+            plt.xlabel("x in a.u.",fontsize = 20)
+            plt.ylabel("p in a.u.",fontsize = 20)
+            plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+            plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+            plt.xticks(np.linspace(round(min(xsol),2),round(max(xsol),2), 5), fontsize = 20)
+            plt.yticks(np.linspace(round(min(psol),2),round(max(psol),2), 5),fontsize = 20)
+            plt.savefig(self.path + filename + ".png", dpi =  300, bbox_inches = "tight")
+            plt.show()
+
+        elif variable == "y":
+            plt.plot(ysol,qsol)
+            plt.xlabel("y in a.u.",fontsize = 20)
+            plt.ylabel("q in a.u.",fontsize = 20)
+            plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+            plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+            plt.xticks(np.linspace(round(min(ysol),2),round(max(ysol),2), 5), fontsize = 20)
+            plt.yticks(np.linspace(round(min(qsol),2),round(max(qsol),2), 5),fontsize = 20)
+            plt.savefig(self.path + filename + ".png", dpi =  300, bbox_inches = "tight")
+            plt.show()
+            
+        return None
+    
 
 with open(str(Path.cwd()) + "/path.txt") as f:
   path = f.read()
@@ -221,4 +253,4 @@ alpha = 0.2
 
 hm = Fastplots(par, t, keep, k, mu, gamma, alpha, beta, path)
 
-print(hm.metadata_from_timeseries("y", 3))
+print(hm.phaseplane("y", "test"))
