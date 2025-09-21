@@ -56,6 +56,7 @@ class OnesidedCoupling:
     Args:
         par (List): Initial Condition x0, y0, p0, q0
         t (List): Timespan
+        t_keep(int): how many timepoints to keep
         k (float): coupling strenght
         mu (float): non-linear damping constant
         gamma (float): damping constant
