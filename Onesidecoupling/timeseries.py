@@ -7,29 +7,29 @@ from mainscript import OnesidedCoupling
 
 # [Parameters]________________________________________________________________________________________________________________________________________________
 
-with open(str(Path.cwd()) + "/path.txt") as f:
-  path = f.read()
+# with open(str(Path.cwd()) + "/path.txt") as f:
+#   path = f.read()
 
-t_step = 0.01
-t_last = 100 # 50h -> 1 point represent 1h
-t = np.arange(0, 5000, t_step)
-keep = int(t_last / t_step)
-x = 1
-y = 1
-q = 1
-p = 1
-par = x,y,p,q
-k = 1.3
-gamma = 0.1
-mu = 10.0
-beta = 0.3
-alpha = 0.2
-lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
+# t_step = 0.01
+# t_last = 100 # 50h -> 1 point represent 1h
+# t = np.arange(0, 5000, t_step)
+# keep = int(t_last / t_step)
+# x = 1
+# y = 1
+# q = 1
+# p = 1
+# par = x,y,p,q
+# k = 1.3
+# gamma = 0.1
+# mu = 10.0
+# beta = 0.3
+# alpha = 0.2
+# lilie = OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta)
 
-xsol = lilie.x_solv()
-ysol = lilie.y_solv()
-psol = lilie.p_solv()
-qsol = lilie.q_solv()
+# xsol = lilie.x_solv()
+# ysol = lilie.y_solv()
+# psol = lilie.p_solv()
+# qsol = lilie.q_solv()
 
 
 # # [Plots]________________________________________________________________________________________________________________________________________________
@@ -53,17 +53,17 @@ qsol = lilie.q_solv()
 
 # [y-timeseries]
 
-plt.plot(t, ysol, label = f"k: {k:.2f}")
-plt.ylabel("y in cm", fontsize = 14)
-y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
-# plt.legend(fontsize = 16, loc = "upper left")
-plt.xlabel("t in ms", fontsize = 14)
-plt.xticks(fontsize = 12)
-plt.yticks(fontsize = 12)
-# plt.ylim([-3, 3])
-plt.xlim([0,400])
-plt.savefig(path + "y_timeseries_k0_ß03_y01_a02_mu10" + ".png", dpi =  300, bbox_inches = "tight")
-plt.show()
+# plt.plot(t, ysol, label = f"k: {k:.2f}")
+# plt.ylabel("y in cm", fontsize = 14)
+# y_title = "$\gamma$ = " + f"{gamma:.2f}, ß = " + f"{beta:.2f}, $\\alpha$ = " + f"{alpha:.2f}, $\mu$ = " + f"{mu:.2f}, x$_0$ = " + f"{par[0]:.2f}, y$_0$ = "+ f"{par[1]:.2f}, p$_0$ = "+ f"{par[2]:.2f}, q$_0$ = "+ f"{par[3]:.2f}"
+# # plt.legend(fontsize = 16, loc = "upper left")
+# plt.xlabel("t in ms", fontsize = 14)
+# plt.xticks(fontsize = 12)
+# plt.yticks(fontsize = 12)
+# # plt.ylim([-3, 3])
+# plt.xlim([0,400])
+# plt.savefig(path + "y_timeseries_k0_ß03_y01_a02_mu10" + ".png", dpi =  300, bbox_inches = "tight")
+# plt.show()
 
 
 
@@ -159,38 +159,38 @@ app = 3
 
 # [multiple plots Van der Pol]_______________________________________________________________________________________________________________________________________________________________________________________________________
 
-# with open(str(Path.cwd()) + "/path.txt") as f:
-#   path = f.read()
+with open(str(Path.cwd()) + "/path.txt") as f:
+  path = f.read()
 
-# t_step = 0.01
-# t_last = 100 # 50h -> 1 point represent 1h
-# t = np.arange(0, 5000, t_step)
-# keep = int(t_last / t_step)
-# x = 1
-# y = 1
-# q = 1
-# p = 1
-# par = x,y,p,q
-# k = 0.1
-# gamma = 0.1
-# mu = [0.5,1.0,2.0,3.0,5.0,10.0,20.0]
-# beta = 0.3
-# alpha = 0.2
+t_step = 0.01
+t_last = 100 # 50h -> 1 point represent 1h
+t = np.arange(0, 5000, t_step)
+keep = int(t_last / t_step)
+x = 1
+y = 1
+q = 1
+p = 1
+par = x,y,p,q
+k = 0.1
+gamma = 0.1
+mu = [0.5,2.0,5.0,10.0]
+beta = 0.3
+alpha = 0.2
 
-# app = 3
+app = 3
 
-# for index, m in enumerate(mu):
+for index, m in enumerate(mu):
 
-#   x_mul_sol = OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).x_solv()
+  x_mul_sol = OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).x_solv()
 
-#   period_vdp = OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).period(10)[0]
-#   f_vdp = 1/period_vdp
-#   w_vdp = 2 * np.pi * f_vdp
-#   amp_vdp = np.mean(OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).find_peaks_max()[0][1]['peak_heights'])
-#   time_amp = [t[i] for i in OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).find_peaks_max()[0][0][-10:]]
+  period_vdp = OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).period(10)[0]
+  f_vdp = 1/period_vdp
+  w_vdp = 2 * np.pi * f_vdp
+  amp_vdp = np.mean(OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).find_peaks_max()[0][1]['peak_heights'])
+  time_amp = [t[i] for i in OnesidedCoupling(par, t, keep, k, m, gamma, alpha, beta).find_peaks_max()[0][0][-10:]]
 
-#   print("Period vdp: ", round(period_vdp, app))
-#   print("frequency vdp: ", round(f_vdp, app))
-#   print("angular frequency vdp: ", round(w_vdp, app))
-#   print("amplitude vdp: ", round(amp_vdp, app))
-#   print(" ")
+  print("Period vdp: ", round(period_vdp, app))
+  print("frequency vdp: ", round(f_vdp, app))
+  print("angular frequency vdp: ", round(w_vdp, app))
+  print("amplitude vdp: ", round(amp_vdp, app))
+  print(" ")

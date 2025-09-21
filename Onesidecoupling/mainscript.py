@@ -232,7 +232,13 @@ class OnesidedCoupling:
     
 
     def square_interpolation(self):
-
+        """
+        this function get the peak of the plot, that is interpolated.
+        a quadratic fit (a + x^2 + b x + c) for each peak. three points for each peak of the plots was taken for the fit.
+        
+        Returns:
+            list: interpolated maximal peakposition x and y 
+        """
         t = self.peak_plusminus()[0]
         sol = self.peak_plusminus()[1]
 

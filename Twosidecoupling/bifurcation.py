@@ -22,10 +22,10 @@ par = x,y,p,q
 k = 0.1
 gamma = 0.1
 mu = 10 # realistic mu value, because the vocal foldds doesnt oscillate sinousidal 
-beta = 0.1
-alpha = [0.1]
+beta = 0.3
+alpha = [0.2]
 par0 = x,y,p,q
-k_up = np.linspace(0, 10, 100)
+k_up = np.arange(0, 1, 0.001)
 k_down = k_up[::-1]
 
 
@@ -121,21 +121,20 @@ for i in range(len(alpha)):
             None
 
 
-    plt.xlabel("k", fontsize = 20)
-    plt.ylabel("A$_{y}$ in a.u.", fontsize = 20)
-    plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-    plt.title(label = "$\\alpha$ = " + f"{alpha[i]:.4f}" + ", $\\omega$ = " + f"{np.sqrt(alpha[i]):.4f}", fontsize = 20)
-    plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 20)
-    plt.title(label = "$\\mu$ = " + f"{mu:.2f}" + ", $\\gamma$ = " + f"{gamma:.2f}" + ", $\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\beta$ = " + f"{beta:.2f}", fontsize = 20)
+    plt.xlabel("k", fontsize = 14)
+    plt.ylabel("A$_{y}$ in cm", fontsize = 14)
+    plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.3f'))
+
+    plt.xticks(np.linspace(round(min(k_up),2),round(max(k_up),2), 5), fontsize = 12)
+    # plt.title(label = "$\\mu$ = " + f"{mu:.2f}" + ", $\\gamma$ = " + f"{gamma:.2f}" + ", $\\alpha$ = " + f"{alpha[i]:.2f}" + ", $\\beta$ = " + f"{beta:.2f}", fontsize = 14)
     
-    # lines = [0.01, 0.1, 0.2, 0.4, 0.8]
+    # lines = [0.1,4.0, 5.0, 8.0]
     # cmap = plt.get_cmap('viridis', len(lines))
     # for g, z in enumerate(lines):
     #     plt.axvline(x = z, color = cmap(g)) 
-    
-    plt.yticks(fontsize = 20)
-    plt.savefig(path +"Bifurcation_allpeaks_ß01_y01_mu10_" + "alpha01"+  ".png", dpi =  400, bbox_inches = "tight")
-    print(alpha[i])
+    plt.yticks(fontsize = 12)
+    # plt.savefig(path +"Bifurcation_smallk_ß03_y01_mu10_" + "alpha02"+  ".png", dpi =  400, bbox_inches = "tight")
+    plt.show()
 
 
 
