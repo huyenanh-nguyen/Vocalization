@@ -37,36 +37,36 @@ def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 
 # [Hysteresis]___________________________________________________________________________________________________________________
 
-# par0 = 1,1,1,1
-# amplitudes_up = []
-# amplitudes_down = []
+par0 = 1,1,1,1
+amplitudes_up = []
+amplitudes_down = []
 
-# for f in alpha_up:
-#     sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
-#     par0 = sol[-1]
-#     print(par0)
-#     amplitudes_up.append(compute_amplitude(par0, t, keep, k, mu, gamma, f, beta))
+for f in alpha_up:
+    sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
+    par0 = sol[-1]
+    print(par0)
+    amplitudes_up.append(compute_amplitude(par0, t, keep, k, mu, gamma, f, beta))
 
 
-# par0 = sol[-1]
-# for j in alpha_down:
-#     sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
-#     par0 = sol[-1]  
-#     print(par0)
-#     amplitudes_down.append(compute_amplitude(par0, t, keep, k, mu, gamma, j, beta))
+par0 = sol[-1]
+for j in alpha_down:
+    sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
+    par0 = sol[-1]  
+    print(par0)
+    amplitudes_down.append(compute_amplitude(par0, t, keep, k, mu, gamma, j, beta))
 
-# cmap = plt.get_cmap('viridis', 2)
-# plt.plot(np.sqrt(alpha_up), amplitudes_up, label="Increasing ω$_y$",  color = "#431F6A")
-# plt.plot(np.sqrt(alpha_down), amplitudes_down, label="Decreasing ω$_y$", color = "#88C960")
-# plt.xlabel("$\omega _y$ in kHz", fontsize = 14)
-# plt.ylabel("A$_{y, max}$ in cm", fontsize = 14)
-# # plt.axvline(x = np.sqrt(0.3), color = "r")
-# plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-# plt.xticks(np.linspace(min(np.sqrt(alpha_up)),max(np.sqrt(alpha_up)),5), fontsize = 12)
-# plt.yticks(fontsize = 12)
-# plt.legend(fontsize = 14)
-# plt.savefig( path + "Hysteresis_k005" + ".png", dpi =  300, bbox_inches = "tight")
-# plt.show()
+cmap = plt.get_cmap('viridis', 2)
+plt.plot(np.sqrt(alpha_up), amplitudes_up, label="Increasing ω$_y$",  color = "#431F6A")
+plt.plot(np.sqrt(alpha_down), amplitudes_down, label="Decreasing ω$_y$", color = "#88C960")
+plt.xlabel("$\omega _y$ in kHz", fontsize = 14)
+plt.ylabel("A$_{y, max}$ in cm", fontsize = 14)
+# plt.axvline(x = np.sqrt(0.3), color = "r")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.xticks(np.linspace(min(np.sqrt(alpha_up)),max(np.sqrt(alpha_up)),5), fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.legend(fontsize = 14)
+plt.savefig( path + "Hysteresis_k005" + ".png", dpi =  300, bbox_inches = "tight")
+plt.show()
 
 # [Basin of Attractor]___________________________________________________________________________________________________________________
 
@@ -112,75 +112,75 @@ def compute_amplitude(par, t, keep, k, mu, gamma, alpha, beta):
 
 # [Combined Hysteresis and Basin of attrators]_____________________________________________________________________________________________
 
-fig = plt.figure(figsize=(12, 6), constrained_layout=True)
-gs = fig.add_gridspec(1, 2, width_ratios=[1.2, 1.4])
+# fig = plt.figure(figsize=(12, 6), constrained_layout=True)
+# gs = fig.add_gridspec(1, 2, width_ratios=[1.2, 1.4])
 
-# LEFT PLOT: Duffing amplitude sweep
-ax_left = fig.add_subplot(gs[0, 0])
+# # LEFT PLOT: Duffing amplitude sweep
+# ax_left = fig.add_subplot(gs[0, 0])
 
-par0 = (1, 1, 1, 1)
-amplitudes_up = []
-amplitudes_down = []
+# par0 = (1, 1, 1, 1)
+# amplitudes_up = []
+# amplitudes_down = []
 
-for f in alpha_up:
-    sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
-    par0 = sol[-1]
-    amplitudes_up.append(compute_amplitude(par0, t, keep, k, mu, gamma, f, beta))
+# for f in alpha_up:
+#     sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, f, beta).duffvdpsolver()
+#     par0 = sol[-1]
+#     amplitudes_up.append(compute_amplitude(par0, t, keep, k, mu, gamma, f, beta))
 
-par0 = sol[-1]
-for j in alpha_down:
-    sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
-    par0 = sol[-1]
-    amplitudes_down.append(compute_amplitude(par0, t, keep, k, mu, gamma, j, beta))
+# par0 = sol[-1]
+# for j in alpha_down:
+#     sol = OnesidedCoupling(par0, t, keep, k, mu, gamma, j, beta).duffvdpsolver()
+#     par0 = sol[-1]
+#     amplitudes_down.append(compute_amplitude(par0, t, keep, k, mu, gamma, j, beta))
 
-ax_left.plot(np.sqrt(alpha_up), amplitudes_up, label="Increasing ω$_y$", color="#431F6A")
-ax_left.plot(np.sqrt(alpha_down), amplitudes_down, label="Decreasing ω$_y$", color="#88C960")
+# ax_left.plot(np.sqrt(alpha_up), amplitudes_up, label="Increasing ω$_y$", color="#431F6A")
+# ax_left.plot(np.sqrt(alpha_down), amplitudes_down, label="Decreasing ω$_y$", color="#88C960")
 
-ax_left.set_xlabel("$\omega _y$ in kHz", fontsize=22)
-ax_left.set_ylabel("A$_{y, max}$ in cm", fontsize=22)
-ax_left.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-ax_left.set_xticks(np.linspace(min(np.sqrt(alpha_up)), max(np.sqrt(alpha_up)), 5))
-ax_left.tick_params(axis='both', labelsize=20)
-ax_left.legend(fontsize=20)
+# ax_left.set_xlabel("$\omega _y$ in kHz", fontsize=22)
+# ax_left.set_ylabel("A$_{y, max}$ in cm", fontsize=22)
+# ax_left.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+# ax_left.set_xticks(np.linspace(min(np.sqrt(alpha_up)), max(np.sqrt(alpha_up)), 5))
+# ax_left.tick_params(axis='both', labelsize=20)
+# ax_left.legend(fontsize=20)
 
-# RIGHT PLOT: Attractor landscape
-ax_right = fig.add_subplot(gs[0, 1])
+# # RIGHT PLOT: Attractor landscape
+# ax_right = fig.add_subplot(gs[0, 1])
 
-alpha = [0.4]
-colours = ["#283D3B", "#F8D794"]
-cmap = ListedColormap(colours)
+# alpha = [0.4]
+# colours = ["#283D3B", "#F8D794"]
+# cmap = ListedColormap(colours)
 
-x_par = 1
-y_par = np.arange(-3, 3, 0.1)
-p_par = 1
-q_par = np.arange(-3, 3, 0.1)
+# x_par = 1
+# y_par = np.arange(-3, 3, 0.1)
+# p_par = 1
+# q_par = np.arange(-3, 3, 0.1)
 
-q, y = np.meshgrid(q_par, y_par)
-y_amplitude_matrix = np.zeros_like(y)
+# q, y = np.meshgrid(q_par, y_par)
+# y_amplitude_matrix = np.zeros_like(y)
 
-for l in range(len(q_par)):
-    for m in range(len(y_par)):
-        par0 = [x_par, y_par[m], p_par, q_par[l]]
-        y_amplitude = compute_amplitude(par0, t, keep, k, mu, gamma, alpha[0], beta)
-        y_amplitude_matrix[l, m] = round(y_amplitude, 2)
+# for l in range(len(q_par)):
+#     for m in range(len(y_par)):
+#         par0 = [x_par, y_par[m], p_par, q_par[l]]
+#         y_amplitude = compute_amplitude(par0, t, keep, k, mu, gamma, alpha[0], beta)
+#         y_amplitude_matrix[l, m] = round(y_amplitude, 2)
 
-im = ax_right.imshow(y_amplitude_matrix, extent=[-3, 3, -3, 3], cmap=cmap, origin='lower')
+# im = ax_right.imshow(y_amplitude_matrix, extent=[-3, 3, -3, 3], cmap=cmap, origin='lower')
 
-ax_right.set_xlabel("y in cm", fontsize=22)
-ax_right.set_ylabel("q in cm", fontsize=22)
-ax_right.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-ax_right.set_xticks(np.linspace(-3, 3, 5))
-ax_right.set_yticks(np.linspace(-3, 3, 5))
-ax_right.tick_params(axis='both', labelsize=20)
-labels = [
-    "$\overline{A}_{10}$ =" + f"{np.nanmin(y_amplitude_matrix):.2f}",
-    "$\overline{A}_{10}$ =" + f"{np.nanmax(y_amplitude_matrix):.2f}"
-]
-patches = [mpatches.Patch(color=colours[i], label=labels[i]) for i in range(len(colours))]
-ax_right.legend(handles=patches, fontsize=20, loc='upper right')
+# ax_right.set_xlabel("y in cm", fontsize=22)
+# ax_right.set_ylabel("q in cm", fontsize=22)
+# ax_right.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+# ax_right.set_xticks(np.linspace(-3, 3, 5))
+# ax_right.set_yticks(np.linspace(-3, 3, 5))
+# ax_right.tick_params(axis='both', labelsize=20)
+# labels = [
+#     "$\overline{A}_{10}$ =" + f"{np.nanmin(y_amplitude_matrix):.2f}",
+#     "$\overline{A}_{10}$ =" + f"{np.nanmax(y_amplitude_matrix):.2f}"
+# ]
+# patches = [mpatches.Patch(color=colours[i], label=labels[i]) for i in range(len(colours))]
+# ax_right.legend(handles=patches, fontsize=20, loc='upper right')
 
-plt.savefig(path + "combined_duffing_attractor.png", dpi=400, bbox_inches="tight")
-plt.show()
+# plt.savefig(path + "combined_duffing_attractor.png", dpi=400, bbox_inches="tight")
+# plt.show()
 
     
             
