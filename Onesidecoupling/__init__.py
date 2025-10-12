@@ -1,2 +1,2 @@
 from .mainscript import OnesidedCoupling
-from .method import Fastplots
+from .methodfast import Fastplots

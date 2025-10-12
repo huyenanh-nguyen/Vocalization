@@ -32,37 +32,41 @@ class Fastplots(OnesidedCoupling):
 
     def timeseries_singleplot(self, variable : str, filename : str, xintervall : list, yintervall : list, title : bool):
         """
-        Plotting the timeseries of the choosen variable x,y,p and q.
-        x and p are the variables for the van der Pol ODE and y and q are for the Duffing ODE
+        Plots the time series of a chosen variable (x, y, p, or q).
+
+        The variables `x` and `p` correspond to the Van der Pol oscillator,
+        while `y` and `q` correspond to the Duffing oscillator. This function
+        plots the specified variable over time and optionally saves the plot
+        to the given path.
 
         Args:
-            variable (str): either x, y, p or q
-            filename (str): name of the plot to save to path
-            xintervall (list): x intervall to plot -> example [0,400] from 0 to 400, can also be None
-            yintervall (list): y intervall to plot -> example [-4,4] height from -3 to 3, can also be None
-            title (bool): True or False, if True, the variables will printed out as title. If False, then nothing will be displayed as title
+            variable (str): The variable to plot — one of 'x', 'y', 'p', or 'q'.
+            filename (str): Name of the file to save the plot as.
+            xintervall (list or None): Range of x-axis values to display, e.g., [0, 400]. 
+                If None, the full range is plotted.
+            yintervall (list or None): Range of y-axis values to display, e.g., [-4, 4]. 
+                If None, the full range is plotted.
+            title (bool): If True, displays the variable name as the plot title. 
+                If False, no title is shown.
 
         Returns:
-            Plot: Show plot and save the plot in the path with the filename as name
-        
+            matplotlib.figure.Figure: The generated plot.
+
         Example:
-            t_step = 0.01\n
-            t_last = 100 # 50h -> 1 point represent 1h\n
-            t = np.arange(0, 5000, t_step)\n
-            keep = int(t_last / t_step)\n
-            x = 1\n
-            y = 1\n
-            q = 1\n
-            p = 1\n
-            par = x,y,p,q\n
-            k = 1.3\n
-            gamma = 0.1\n
-            mu = 2\n
-            beta = 0.3\n
-            alpha = 0.2\n
-            hm = Fastplots(par, t, keep, k, mu, gamma, alpha, beta, path)\n
-            hm.timeseries_singleplot("x", "test", [0, 400], None, False)
+            >>> t_step = 0.01
+            >>> t_last = 100  # 50h -> 1 point represents 1h
+            >>> t = np.arange(0, 5000, t_step)
+            >>> keep = int(t_last / t_step)
+            >>> par = (1, 1, 1, 1)
+            >>> k = 1.3
+            >>> gamma = 0.1
+            >>> mu = 2
+            >>> beta = 0.3
+            >>> alpha = 0.2
+            >>> hm = Fastplots(par, t, keep, k, mu, gamma, alpha, beta, path)
+            >>> hm.timeseries_singleplot("x", "test", [0, 400], None, False)
         """
+
         par = self.par
         t = self.t
         k = self.k
@@ -145,16 +149,20 @@ class Fastplots(OnesidedCoupling):
 
     def metadata_from_timeseries(self, variable : str, rounding : int):
         """
-        Printing out the period, frequency, angular frequency and the mean of the last 10 peaks as Amplitude.
-        its empiric measured.
+        Prints the period, frequency, angular frequency, and mean amplitude of the last 10 peaks.
+
+        The values are empirically measured from the given time series data.
 
         Args:
-            variable (str): "x", "y", "p" or "q" 
-            rounding (int): digit to round, if rounding is 3, the value will get rounded 3 digit
+            variable (str): The variable to analyze — one of 'x', 'y', 'p', or 'q'.
+            rounding (int): Number of decimal places to round the results to.
+                For example, if `rounding=3`, values are rounded to three digits.
 
         Returns:
-            Metadata: print out the Period, frequency, angular frequency and the mean of the last 10 Amplitudes of the timeseries
+            None: Prints the period, frequency, angular frequency, and mean amplitude
+            of the last 10 peaks of the time series to the console.
         """
+
         par = self.par
         t = self.t
         k = self.k
@@ -231,6 +239,13 @@ class Fastplots(OnesidedCoupling):
             
         return None
     
+
+
+
+
+
+# [Example]_________________________________________________
+
 
 with open(str(Path.cwd()) + "/path.txt") as f:
   path = f.read()

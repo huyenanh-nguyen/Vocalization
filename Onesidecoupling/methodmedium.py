@@ -9,21 +9,25 @@ from matplotlib.ticker import FormatStrFormatter
 
 def compute_amplitude(par : tuple, t : float, keep : float, k : float, mu : float, gamma : float, alpha : float, beta : float):
     """
-    computing the amplitude of the y value (Duffing time series)
+    Computes the amplitude of the y-values in a Duffing oscillator time series.
+
+    This function calculates the mean amplitude of the last 10 highest peaks 
+    in the simulated Duffing oscillator's y-component over a given timespan.
 
     Args:
-        par (tuple): initial value for x, y, p, q
-        t (List): Timespan
-        keep (float) : how many timepoints to look at
-        k (float): coupling strenght
-        mu (float): non-linear damping constant
-        gamma (float): damping constant
-        alpha (float): linear restoring force
-        beta (float): non linear restoring force
+        par (tuple): Initial values for (x, y, p, q).
+        t (list or np.ndarray): Time span of the simulation.
+        keep (float): Fraction of the total time points to analyze.
+        k (float): Coupling strength.
+        mu (float): Nonlinear damping constant.
+        gamma (float): Linear damping constant.
+        alpha (float): Linear restoring force coefficient.
+        beta (float): Nonlinear restoring force coefficient.
 
     Returns:
-       array: mean Amplitude of the last 10 highest Peak of the time series
+        np.ndarray or float: Mean amplitude of the last 10 highest peaks of the time series.
     """
+
     amp = np.mean(OnesidedCoupling(par, t, keep, k, mu, gamma, alpha, beta).find_peaks_max()[1][1]['peak_heights'][-10:])
     return amp
 
@@ -52,18 +56,29 @@ class Mediumplots(OnesidedCoupling):
 
     
     def hysteresis_plot(self, alpha_up : list, vertikaline : bool, where_vertikalline : float, verticalcolor : str, filename : str):
-        """_summary_
+        """
+        Checks whether the system undergoes hysteresis.
+
+        This function tests if the system exhibits hysteresis behavior when the parameter 
+        `alpha` changes. For each new value of `alpha`, the final state from the previous 
+        iteration is used as the initial condition for the next one.
+
+        Note:
+            The values of `alpha` are converted to `np.sqrt(alpha)` for plotting.
 
         Args:
-            alpha_up (list): _description_
-            vertikaline (bool): _description_
-            where_vertikalline (float): _description_
-            verticalcolor (str): _description_
-            filename (str): _description_
+            alpha_up (list or np.ndarray): Sequence of alpha values to test.
+            vertikaline (bool): If True, plots a vertical line for a specific alpha value.
+            where_vertikalline (float): The alpha value (before taking the square root) 
+                where the vertical line is drawn, e.g., 0.4 → line at `np.sqrt(0.4)`.
+            verticalcolor (str): Color of the vertical line. Can be a named color 
+                (e.g., 'red', 'blue') or any Matplotlib-compatible color code.
+            filename (str): Name of the output plot file.
 
         Returns:
-            _type_: _description_
+        matplotlib.figure.Figure: The generated hysteresis plot.
         """
+
         alpha_down = alpha_up[::-1]
         amplitudes_up = []
         amplitudes_down = []

@@ -1,8 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from mainscript import OnesidedCoupling
+from Onesidecoupling.mainscript import OnesidedCoupling
 
 
 # [Parameters]________________________________________________________________________________________________________________________________________________
