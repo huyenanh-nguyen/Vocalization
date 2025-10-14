@@ -1,4 +1,4 @@
-from mainscript import OnesidedCoupling
+from .mainscript import OnesidedCoupling
 import numpy as np
 from pathlib import Path
 from scipy.integrate import odeint
